@@ -3,7 +3,7 @@
 //use this for Vanila Javascript.
 'use strict';
 
-//2. Variable
+//2. Variable, r/w
 //let (added in ES6)
 //Block Scope!
 let globalName = 'global name';
@@ -19,13 +19,17 @@ console.log(globalName);
 //var hoisting(move declaration from bottom to top)
 //var has no block scope
 
-//3. constants
+//3. constant, r(read only)
 //favor immutable data type always for a few reasons:
 //  - security
 //  - thread safety
 //  - reduce human mistakes
 const daysInWeek = 7;
 const PI = 3.14;
+
+//Note!
+//Immutable data types: primitive types, frozen objects
+//Mutable data types: all objects by default are mutable in JS
 
 //4. Variable types
 //primitive - single item: number, string, boolean, null, undefied, symbol
