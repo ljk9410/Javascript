@@ -36,4 +36,20 @@ true
 false
 null
 undefined
+
+// <식별자>
+// 식별자는 단순히 말하면 하나의 이름
+// 변수나 함수의 이름에 사용된다
+// 이름의 첫번째에는 반드시 ASCII문자, 밑줄, $(달러기호)이어야 한다
+// 다음에는 글자, 숫자, 밑줄, $(달러기호)가 될 수 있다
+// 첫번째 문자에는 숫자가 사용될 수 없기 때문에 숫자리터럴과 구분 가능
+i
+my_variable_name
+v13
+_dummy
+$str
+
+// <예약어>
+// js에는 식별자로 사용할 수 없는 단어인 예약어들이 존재한다
+// [키워드와 예약어](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Lexical_grammar)에서 확인
 ```
