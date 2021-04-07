@@ -27,6 +27,7 @@ Number.NEGATIVE_INFINITY
 let msg = "hello" + "world";
 let length = msg.length // 문자열의 length 프로퍼티
 
+
 // <bool 값>
 // bool값은 true와 false 두 가지가 존재
 // 어떤 값이 참인지 거짓인지만을 판별하기 위한 데이터 형
