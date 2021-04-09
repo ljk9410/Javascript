@@ -66,3 +66,59 @@ app.listen(3000);
   * query 객체란 query string을 의미, url 중에서 '?' 뒷부분
 * `response.end(queryData.id);`
   * 정보를 출력하는데, queryData의 id를 출력하겠다.
+
+<br>
+
+### 2. query string을 이용해서 동적인 웹앱 구성하기
+> 이를 통해서 웹페이지가 1억개가 되더라도 원하는 부분을 수정하면 모든 웹페이지에 동시 적용이 되게 만들 수 있다. 이는 효율성을 폭발적으로 증가시키는 기적이라고 볼 수 있다.
+```javascript
+let http = require('http');
+let fs = require('fs');
+let url = require('url');
+let app = http.createServer(function(request,response){
+    let _url = request.url;
+    let queryData = url.parse(_url, true).query;
+    let title = queryData.id;
+    if(_url == '/'){
+      title = 'Welcome';
+    }
+    if(_url == '/favicon.ico'){
+      return response.writeHead(404);
+    }
+    response.writeHead(200);
+    let template = `
+    <!doctype html>
+    <html>
+    <head>
+      <title>WEB1 - ${title}</title>
+      <meta charset="utf-8">
+    </head>
+    <body>
+      <h1><a href="/">WEB</a></h1>
+      <ol>
+        <li><a href="/?id=HTML">HTML</a></li>
+        <li><a href="/?id=CSS">CSS</a></li>
+        <li><a href="/?id=JavaScript">JavaScript</a></li>
+      </ol>
+      <h2>${title}</h2>
+      <p><a href="https://www.w3.org/TR/html5/" target="_blank" title="html5 speicification">Hypertext Markup Language (HTML)</a> is the standard markup language for <strong>creating <u>web</u> pages</strong> and web applications.Web browsers receive HTML documents from a web server or from local storage and render them into multimedia web pages. HTML describes the structure of a web page semantically and originally included cues for the appearance of the document.
+      <img src="coding.jpg" width="100%">
+      </p><p style="margin-top:45px;">HTML elements are the building blocks of HTML pages. With HTML constructs, images and other objects, such as interactive forms, may be embedded into the rendered page. It provides a means to create structured documents by denoting structural semantics for text such as headings, paragraphs, lists, links, quotes and other items. HTML elements are delineated by tags, written using angle brackets.
+      </p>
+    </body>
+    </html>
+    `;
+    response.end(template);
+ 
+});
+app.listen(3000);
+```
+* `template`에 template 리터럴을 이용해서 템플릿이 될 html 코드를 선언
+* query string의 id 값에 따라 동적으로 바뀔 부분에 변수를 삽입
+* 링크 부분도 query string에 맞게 수정
+
+<br>
+
+[CRUD]()
+> `Create Read Update Delete` <br>
+> 이 부분에서는 file을 nodejs로 읽을 수 있는 방법을 알아본다
