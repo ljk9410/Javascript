@@ -10,3 +10,7 @@
 [4. 변수](https://github.com/ljk9410/Javascript/tree/master/%ED%95%B5%EC%8B%AC%EA%B0%80%EC%9D%B4%EB%93%9C/Core_JavaScript/4.%EB%B3%80%EC%88%98)
 
 [5. 표현식과 연산자](https://github.com/ljk9410/Javascript/tree/master/%ED%95%B5%EC%8B%AC%EA%B0%80%EC%9D%B4%EB%93%9C/Core_JavaScript/5.%ED%91%9C%ED%98%84%EC%8B%9D%26%EC%97%B0%EC%82%B0%EC%9E%90)
+
+[6. 문장]()
+
+[7. 함수]()
