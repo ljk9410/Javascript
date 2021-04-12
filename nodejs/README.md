@@ -173,19 +173,8 @@ app.listen(3000);
 
 <br>
 
-[콘솔에서의 입력값]()
+[콘솔에서의 입력값](https://github.com/ljk9410/Javascript/blob/master/nodejs/args.js)
 > 프로그램을 실행할 때 유저로부터의 입력값을 이용해서 훨씬 동적이고 똑똑한 프로그램을 만들 수 있다.
-```javascript
-let args = process.argv;
-console.log(args[2]);
-if (args[2] === '1')
-    console.log("Right");
-else
-    console.log("Wrong");
-```
-* `process.argv[0]`: nodejs 실행 프로그램
-* `process.argv[1]`: 실행파일 위치
-* `process.argv[2]`: 입력 인자의 순서대로 진행
 
 <br>
 
@@ -241,4 +230,72 @@ app.listen(3000);
 
 <br>
 
-[nodejs에서 파일 목록 읽어오기]()
+[nodejs에서 파일 목록 읽어오기](https://github.com/ljk9410/Javascript/blob/master/nodejs/readdir.js)
+> 'fs'모듈에 있는 'fs.readdir' method를 이용하면 해당 directory에 있는 파일 목록을 불러올 수 있다.
+
+### 5. 반복문을 이용하여 파일목록 불러오는 기능 추가
+```javascript
+let http = require('http');
+let fs = require('fs');
+let url = require('url');
+let app = http.createServer(function(request,response){
+    let _url = request.url;
+    let queryData = url.parse(_url, true).query;
+    let pathname = url.parse(_url, true).pathname;
+    
+    if (pathname === '/')
+    {
+      fs.readdir('./data', (err, fileLists) => {
+        fs.readFile(`data/${queryData.id}`, 'utf8', (err, description) => {
+          let title = queryData.id;
+          if (queryData.id === undefined)
+          {
+            title = "Welcome";
+            description = "Hello, Node.js";
+          }
+          /*
+          let list = `
+          <ol>
+            <li><a href="/?id=HTML">HTML</a></li>
+            <li><a href="/?id=CSS">CSS</a></li>
+            <li><a href="/?id=JavaScript">JavaScript</a></li>
+          </ol>
+          `;
+          */
+          let list = '<ul>';
+          for (let i = 0; i < fileLists.length; i++) {
+            list = list + `<li><a href="/?id=${fileLists[i]}">${fileLists[i]}</a></li>`;
+          }
+          list = list + '</ul>';
+          let template = `
+          <!doctype html>
+          <html>
+          <head>
+            <title>WEB1 - ${title}</title>
+            <meta charset="utf-8">
+          </head>
+          <body>
+            <h1><a href="/">WEB</a></h1>
+            ${list}
+            <h2>${title}</h2>
+            <p>${description}</p>
+          </body>
+          </html>
+          `;
+          response.writeHead(200); // 정상적으로 데이터가 전송
+          response.end(template);
+        });
+      });
+    }
+    else 
+    {
+      response.writeHead(404); // path를 찾을 수 없다는 error
+      response.end('Not found');
+    }
+});
+app.listen(3000);
+```
+* list 변수 안에 반복문을 이용해서 fileList를 출력
+* 이를 위해서 `fs.readdir()` 함수를 사용
+* 이러한 과정을 통해서 data 폴더 안에 새로운 파일을 추가하면 알아서 웹페이지를 변경시켜줄 수 있다.
+* 데이터가 변경되었을 때 로직을 변경하지 않아도 된다.
