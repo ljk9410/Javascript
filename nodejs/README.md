@@ -122,6 +122,7 @@ app.listen(3000);
 [CRUD](https://github.com/ljk9410/Javascript/tree/master/nodejs/fileRead)
 > `Create Read Update Delete` <br>
 > 이 부분에서는 file을 nodejs로 읽을 수 있는 방법을 알아본다
+
 <br>
 
 ### 3. fs를 이용해서 동적 웹앱 본문 구현
@@ -169,3 +170,75 @@ let app = http.createServer(function(request,response){
 });
 app.listen(3000);
 ```
+
+<br>
+
+[콘솔에서의 입력값]()
+> 프로그램을 실행할 때 유저로부터의 입력값을 이용해서 훨씬 동적이고 똑똑한 프로그램을 만들 수 있다.
+```javascript
+let args = process.argv;
+console.log(args[2]);
+if (args[2] === '1')
+    console.log("Right");
+else
+    console.log("Wrong");
+```
+* `process.argv[0]`: nodejs 실행 프로그램
+* `process.argv[1]`: 실행파일 위치
+* `process.argv[2]`: 입력 인자의 순서대로 진행
+
+<br>
+
+### 4. 조건문을 이용해서 웹앱 구현
+```javascript
+let http = require('http');
+let fs = require('fs');
+let url = require('url');
+let app = http.createServer(function(request,response){
+    let _url = request.url;
+    let queryData = url.parse(_url, true).query;
+    let pathname = url.parse(_url, true).pathname;
+    let title = queryData.id;
+
+    if(pathname === '/') {
+      // 조건문을 이용해서 '/' 일 때의 웹 페이지를 구현
+      if (queryData.id === undefined)
+        {
+          title = "Welcome";
+          description = "Hello, Node.js";
+        }
+      fs.readFile(`data/${queryData.id}`, 'utf8', (err, description) => {
+        let template = `
+        <!doctype html>
+        <html>
+        <head>
+          <title>WEB1 - ${title}</title>
+          <meta charset="utf-8">
+        </head>
+        <body>
+          <h1><a href="/">WEB</a></h1>
+          <ol>
+            <li><a href="/?id=HTML">HTML</a></li>
+            <li><a href="/?id=CSS">CSS</a></li>
+            <li><a href="/?id=JavaScript">JavaScript</a></li>
+          </ol>
+          <h2>${title}</h2>
+          <p>${description}</p>
+        </body>
+        </html>
+        `;
+        response.writeHead(200); // 정상적으로 데이터가 전송
+        response.end(template);
+      });
+    } else {
+      response.writeHead(404); // path를 찾을 수 없다는 error
+      response.end('Not found');
+    }
+
+});
+app.listen(3000);
+```
+
+<br>
+
+[nodejs에서 파일 목록 읽어오기]()
