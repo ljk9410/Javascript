@@ -109,3 +109,79 @@ console.log(kim.sum(), lee.sum());
 > 어떤 사물의 공통된 모습, 본래의 모습. 모든 객체들이 메소드와 프로퍼티를 상속 받기 위한 템플릿으로써 prototype object를 가진다는 의미. 즉 한 객체에 정의된 메소드와 프로퍼티를 다른 객체에서 사용할 수 있도록 만든 것이다.
 
 > 정확히 말하면 상속되는 메소드와 프로퍼티들은 각 객체가 아니라 객체 생성자의 prototype이라는 속성에 정의되어 있다.
+```javascript
+// 위에서 짰던 아래의 코드는 생성자를 통해 객체가 만들어질 때마다 함수를 계속해서 새로 생성하기 때문에 메모리가 많이 낭비된다. 즉, 생성자 안에서 method를 만드는 것의 단점
+function Person(name, first, second) {
+    this.name = name,
+    this.first = first,
+    this.second = second,
+    this.sum = function () {
+        return this.first+this.second;
+    }
+}
+
+// 그렇다면 모든 객체가 공통적으로 사용하는 속성을 만들 수 있으면 어떨까?
+function Person(name, first, second) {
+    this.name = name,
+    this.first = first,
+    this.second = second
+}
+
+Person.prototype.sum = function () {
+    return this.first+this.second;
+}
+
+let kim = new Person('kim', 10, 20);
+let lee = new Person('lee', 15, 25);
+
+// Object.prototype.function 을 생성자함수 바깥에서 정의하면 얻을 수 있는 이익
+// 1. 객체를 많이 만들어도 코드가 한번만 실행되기 때문에 성능이 올라감
+// 2. 자연스럽게 메모리도 절약
+// 3. 함수를 수정하면 모든 객체에 적용이 됨
+```
+* javascript는 객체가 생성되면 'prototype chain'이 생성됨
+* method가 호출되면 맨 처음 자기 자신 내에 그 method가 있는지 확인
+  * 있다면 그 method를 호출, 실행
+  * 없다면 자신 객체의 생성자에 그 method가 정의되어 있는지 확인
+  * 이를 반복
+
+<br>
+
+### class
+> 객체지향 언어에서 객체를 사용하는 부담을 줄여주는 문법. constructor 함수보다 더 쉽게 객체 공장을 만들어준다.
+
+> ES6부터 이 문법을 지원한다.
+```javascript
+// 객체 공장 생성
+class Person {
+
+}
+
+// 객체의 초기 상태를 setting
+class Person {
+        // constructor 함수를 반드시 실행해야 한다.
+    constructor(name, first, second) {
+        this.name = name,
+        this.first = first,
+        this. second = second;
+    }
+    }
+}
+
+// class method 만들기
+class Person {
+    constructor(name, first, second) {
+        this.name = name,
+        this.first = first,
+        this. second = second;
+    }
+
+    sum() {
+        return this.first + this.second;
+    }
+}
+```
+
+<br>
+
+### 상속
