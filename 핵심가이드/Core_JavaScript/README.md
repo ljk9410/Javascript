@@ -13,4 +13,6 @@
 
 [6. 문장](https://github.com/ljk9410/Javascript/tree/master/%ED%95%B5%EC%8B%AC%EA%B0%80%EC%9D%B4%EB%93%9C/Core_JavaScript/6.%EB%AC%B8%EC%9E%A5)
 
-[7. 함수]()
+[7. 함수](https://github.com/ljk9410/Javascript/tree/master/%ED%95%B5%EC%8B%AC%EA%B0%80%EC%9D%B4%EB%93%9C/Core_JavaScript/7.%ED%95%A8%EC%88%98)
+
+[8. 객체](https://github.com/ljk9410/Javascript/tree/master/%ED%95%B5%EC%8B%AC%EA%B0%80%EC%9D%B4%EB%93%9C/Core_JavaScript/8.%EA%B0%9D%EC%B2%B4)

@@ -185,3 +185,59 @@ class Person {
 <br>
 
 ### 상속
+> class 에 새로운 메소드, 프로퍼티를 추가하고 제거하는 유지보수를 쉽게 해주는 기능을 제공
+```javascript
+class Person {
+    constructor(name, first, second) {
+        this.name = name,
+        this.first = first,
+        this. second = second;
+    }
+
+    sum() {
+        return this.first + this.second;
+    }
+}
+
+class PersonPlus extends Person {
+    avg() {
+        return (this.first + this.second) / 2;
+    }
+}
+// 새로운 객체를 만들 필요 없이 기존의 객체가 가지고 있는 메소드와 프로퍼티를 그대로 상속받아 새로운 기능을 붙인다.
+```
+
+<br>
+
+### super
+> 부모 class의 기능을 실행하면서 자식이 가지고 있는 기능 중 중복을 제거하는 기능
+```javascript
+class Person {
+    constructor(name, first, second) {
+        this.name = name,
+        this.first = first,
+        this. second = second;
+    }
+
+    sum() {
+        return this.first + this.second;
+    }
+}
+
+class PersonPlus extends Person {
+    constructor(name, first, second, third) {
+        super(name, first, second);
+        this.third = third;
+    }
+
+    sum() {
+        return super.sum() + this.third;
+    }
+    
+    avg() {
+        return (this.first + this.second + this.third) / 3;
+    }
+}
+```
+* `super()`: 부모 클래스의 constructor() 함수를 의미
+* `super.`: 부모 클래스자체를 의미
