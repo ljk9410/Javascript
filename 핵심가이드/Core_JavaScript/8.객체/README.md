@@ -241,3 +241,113 @@ class PersonPlus extends Person {
 ```
 * `super()`: 부모 클래스의 constructor() 함수를 의미
 * `super.`: 부모 클래스자체를 의미
+
+<br>
+
+### inheritance
+> 일반적인 객체지향 언어와 다르게 javascript의 상속은 'prototype link'라는 것을 통해서 부모자식 관계를 마음대로 변경할 수 있다.
+```javascript
+let superObj = {superVal:'super'};
+let subObj = {subVal:'sub'};
+console.log(subObj.superVal); //undefined
+subObj.__proto__ = superObj;
+console.log(subObj.subVal);
+console.log(subObj.superVal); //super
+
+//이 경우 부모의 property를 바꾸러면 subObj.__proto__.superVal = 'sub';
+subObj.superVal = 'sub'; 
+console.log(subObj);
+console.log(superObj.superVal); //super
+```
+* javascript는 상속에 관해서 굉장히 많은 유연성을 제공한다.
+* 하지만 이러한 유연성이 문제가 되는 경우도 많다.
+
+<br>
+
+### Object.create(obj)
+> `__proto__`의 대체
+```javascript
+let superObj = {superVal:'super'};
+// let subObj = {subVal:'sub'};
+// console.log(subObj.superVal); //undefined
+// subObj.__proto__ = superObj;
+let subObj = Object.create(superObj);
+subObj.subVal = 'sub';
+console.log(subObj.subVal);
+console.log(subObj.superVal); //super
+
+subObj.superVal = 'sub';
+console.log(superObj.superVal); //super
+```
+
+<br>
+
+### 객체와 함수
+> 함수에 'new'를 붙이면 그 함수는 객체가 된다. 일반적으로 선언된 함수도 어떤 경우에는 객체의 메소드로 변할 수 있다.
+
+<br>
+
+### call 과 bind
+```javascript
+let lee = {name: 'lee', first: 10, second: 20};
+let kim = {name: 'kim', first: 10, second: 10};
+function sum(prefix) {
+    return prefix+(this.first + this.second);
+}
+// sum.call(Obj_name);
+console.log(sum.call(lee)); // 30
+console.log(sum.call(kim)); // 20 
+// sum()이라는 객체를 실행 -> this === kim
+// 모든 함수는 call 이라는 메소드를 가지고 있다
+// javascript 에서는 함수도 객체
+// call(this, 함수의 args들이 들어옴)
+console.log(sum.call(lee, '=>'));
+
+//bind
+//새로운 취지에 맞는 새로운 함수를 return 해주는 메소드
+let kimSum = sum.bind(kim, '-> ');
+console.log(kimSum());
+```
+
+<br>
+
+### prototype vs __proto__
+* 함수(객체)가 생성되면 그 함수(객체)의 `prototype 객체`가 생긴다.
+* 함수가 생성되면 prototype 이라는 프로퍼티가 생긴다.
+* `함수.prototype`은 그 함수의 prototype 객체를 가리킨다.
+* 반대로 함수의 prototype 객체에는 constructor 라는 프로퍼티가 생긴다.
+* constructor는 처음 생성된 함수를 가리킨다.
+* 처음 생성된 함수(객체)를 이용해서 새로운 instance를 만들게 되면, 그 instance 안에 `__proto__` 프로퍼티가 생긴다
+* `__proto__` 프로퍼티는 처음 생성된 함수의 `prototype 객체`를 가리킨다.
+
+<br>
+
+### 생성자 함수를 통한 상속
+```javascript
+function Person(name, first, second) {
+    this.name = name;
+    this.first = first;
+    this.second = second;
+}
+
+Person.prototype.sum = function() {
+    return this.first + this.second;
+}
+
+function PersonPlus(name, first, second, third) {
+    Person.call(this, name, first, second);
+    this.third = third;
+}
+
+//PersonPlus.prototype.__proto__ = Person.prototype;
+PersonPlus.prototype = Object.create(Person.prototype);
+PersonPlus.prototype.constructor = PersonPlus;
+PersonPlus.prototype.avg = function () {
+    return (this.first + this.second + this.third) / 3
+}
+
+let lee = new PersonPlus('lee', 10, 20, 30);
+console.log(lee.sum());
+console.log(lee.avg());
+console.log(lee.constructor);
+```
