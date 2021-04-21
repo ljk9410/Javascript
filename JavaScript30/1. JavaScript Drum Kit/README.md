@@ -8,7 +8,7 @@
 * `data-아무이름` 형태로 사용
 * `class 태그`와 그 사용법이 비슷함
 
-### ketdown event
+### keydown event
 * `window.addEventListener('keydown', function(){});`
 * 웹 브라우저에서 키보드가 눌렸을 때 function을 호출하는 event
 * 이 과제에서는 `keydown.keyCode` property를 사용
@@ -32,7 +32,7 @@
 ## 오류 및 해결
 > 오류와 그 원인 그리고 해결
 
-### `document.querySelectorAll()`
+### document.querySelectorAll()
 * 동일한 이름을 가진 태그들을 모두 선택하는 메소드
 * `NodeList` 배열로 return
 * 유사배열이기 때문에 모든 태그들에 대해 무언가를 하고 싶다면 `forEach()`를 사용
