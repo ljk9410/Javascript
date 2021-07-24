@@ -52,3 +52,40 @@ class Name extends Component {
 * 컴퍼넌트 구현에 필요한 데이터
 * 조금 더 복잡하고 효율적으로 컴퍼넌트를 구현하기 위해 필요
 * 컴퍼넌트가 내부적으로(외부적으로 알리지 않게끔) 정보를 사용하고 싶을때 state를 이용
+
+## 이벤트 & state & props
+* react에서는 `state`나 `props`의 값이 바뀌면 해당되는 `render()`에 의해 웹사이트의 화면이 다시 그려진다
+* 이벤트 설치
+  * `onClick={}` 의 형식을 반드시 지켜야함
+  * `<a>` 태그에 이벤트를 설치하면 자동적으로 reload가 되기 때문에 rendering 없이도 동적인 것을 보여줄 수 있는 javascript의 취지와는 맞지 않게 됨
+  * 이를 위해서 `e.preventDefault()`라는 `e` 객체의 메소드를 사용
+* 이벤트로 state 변경하기
+  * `bind()` 를 이용해서 `this`를 엮어줘야 함
+  * `setState()` 를 이용, state의 상태를 변경해주기
+    * 초기 state값을 정한 뒤에 컴퍼넌트의 state를 바꾸기 위해서 `setState()` 사용
+    * 초기화 이후 `this.state.mode = 'welcome` 이런 식으로 바꾸게 되면 react가 변경을 인지할 수 없다
+    * 따라서 `this.setState({mode:'welcome'})` 처럼 객체로 변경해야 함
+
+## 컴포넌트 이벤트 만들기
+```javascript
+<Script
+  onChangePage={
+    function() {
+      this.setState(
+        {mode:'welcome'},
+      )
+    }.bind(this)
+  }
+>
+```
+* 컴포넌트 태그 안에서 만들고자 하는 이벤트를 선언
+```javascript
+<h1>
+  <a href ="/" onClick={
+    function(e){
+      e.preventDefault();
+      this.props.onChangePage();
+    }.bind(this)}>
+```
+* 그 이벤트를 컴포넌트의 props로 전달
+* 컴포넌트 안에서 원하는 이벤트로 처리(ex onClick)
