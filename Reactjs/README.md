@@ -89,3 +89,30 @@ class Name extends Component {
 ```
 * 그 이벤트를 컴포넌트의 props로 전달
 * 컴포넌트 안에서 원하는 이벤트로 처리(ex onClick)
+
+## Create
+### push와 concat
+* push는 원본데이터를 변경
+* concat은 원본데이터는 건드리지 않고, 새로운 배열을 반환
+
+### 오류해결
+* `Cannot add property object is not extensible`
+  * 엄격모드에서는 객체에 프로퍼티를 추가할 수 없다
+  * 오류가 발생한 이유는 함수에 `bind(this)`를 해주지 않아서!!!
+
+## shouldComponentUpdate()
+* rendering되지 않아도 되는 동작에서 rendering 되는 것을 방지할 수 있는 함수
+* 컴포넌트 안에서 `render()`가 실행되기 전에 실행되는 함수
+* `return true`가 기본값이며 `return false`일 경우 다음에 오는 함수들은 실행되지 않음
+* `newProps`와 `newState`를 인자값으로 가질 수 있다
+
+## immutable
+* 원본을 바꾸지 않는 방법
+* 배열은 `Array.from(복제할 배열)` 객체는 `Object.assgin({}, 복제할 객체)`
+* 성능을 튜닝할 때 필요한 기법
+
+## Update
+* props의 value는 `read-only`이다
+* 따라서 props와 state의 상태를 바꾸기 위해서는 `onChange` 이벤트를 반드시 사용해야함
+
+## Delete
